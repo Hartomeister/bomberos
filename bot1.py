@@ -9,7 +9,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.utils.helper import Helper, HelperMode, ListItem
 #слито в @smoke_software
 
-token = '5574657713:AAGhxEahBQBLT0i6OOhKBjC7m4za25ej51E'
+token = '5574657713:AAFzMnjIPiGlKxrNtRWK8k0OLGqXF9VU9Yg'
 
 bot = Bot(token=token)
 
