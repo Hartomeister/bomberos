@@ -22,7 +22,7 @@ token = '30af97cac8632f48e961e5c4f11655a4' #qiwi токен
 
 publick_key = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsYgkpNaumtRYcxSDJFp2Uz7SxCN5mMV68RCf2XTLXcN43LEEWMC3E7A9CAdg2CV2tfs5JPrbZDTPYZWVUjs9gdgNfH1NbRyy39HCYqTyi' #публичный токен
 
-amount = 5 # цена за подписку
+amount = 100 # цена за подписку
 
 
 admins = [5206676272] #добавь сюда свой ID
@@ -1029,7 +1029,7 @@ async def start_message(message: types.Message):
     await bot.send_message(message.chat.id, 'Добрый день!', reply_markup=main_keyboard)
     user = new_user(message.chat.id)
     if user == 'new user':
-        await bot.send_message(message.chat.id, 'Добро пожаловать в Boom Bot! У вас есть реферальный код? Если есть напишите: ref ВАШ КОД')
+        await bot.send_message(message.chat.id, 'Добро пожаловать в Boom Bot! У вас есть реферальный код? Если есть, напишите мне: ref ВАШ КОД')
    
 
 
@@ -1041,9 +1041,9 @@ async def help_message(message: types.Message):
 async def profile(message: types.Message):
     check = check_sub(message.chat.id)
     if not check:
-        await bot.send_message(message.chat.id, f'Ваш ID:{message.chat.id}👾\nПодписка: отсутствует 😞', reply_markup=profile_keyboard)
+        await bot.send_message(message.chat.id, f'Ваш ID: {message.chat.id}👾\nПодписка: отсутствует 😞', reply_markup=profile_keyboard)
     elif check:
-        await bot.send_message(message.chat.id, f'Ваш ID:{message.chat.id}👾\nПодписка: активна👑', reply_markup=profile_keyboard)
+        await bot.send_message(message.chat.id, f'Ваш ID: {message.chat.id}👾\nПодписка: активна 👑', reply_markup=profile_keyboard)
 
 
 @dp.message_handler(text=["Назад"])
@@ -1143,7 +1143,7 @@ async def admin(message: types.Message):
 @dp.message_handler(text=['Реферальная система🎯'])
 async def referal_system(message: types.Message):
     balance = get_balance(message.chat.id)
-    await bot.send_message(message.chat.id, f'Получите 10% от пополнения ваших рефералов💳\n\nБаланс от рефералов: {balance}₽\n\nВаш реферальный код: {message.chat.id}\n\nКоличество ваших рефералов: {get_referals(message.chat.id,message.chat.id)} ⭐️')
+    await bot.send_message(message.chat.id, f'Получите 10% от пополнения ваших рефералов 💳\n\nБаланс от рефералов: {balance}₽\n\nВаш реферальный код: {message.chat.id}\n\nКоличество ваших рефералов: {get_referals(message.chat.id,message.chat.id)} ⭐️\n\nУ вас есть реферальный код? Если есть, напишите мне: ref ВАШ КОД')
 
 
 
@@ -1187,7 +1187,7 @@ async def admin_commands(message: types.Message):
     elif '79' in message.text and len(message.text) == 11:
         check = check_sub(message.chat.id)
         if not check or check == None:
-            await bot.send_message(message.chat.id, 'У вас нет подписки!Для покупки напишете Оплата👀')
+            await bot.send_message(message.chat.id, 'У вас нет подписки! Для покупки нажмите кнопку Оплата👀')
         elif check:
             number = message.text
             await bot.send_message(message.chat.id, f'Спам на номер {number} запущен!')
