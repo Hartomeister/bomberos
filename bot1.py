@@ -16,13 +16,13 @@ bot = Bot(token=token)
 
 dp = Dispatcher(bot)
 
-phone = 'YOUKEA' #телефон qiwi
+phone = '79111222569' #телефон qiwi
 
 token = '30af97cac8632f48e961e5c4f11655a4' #qiwi токен
 
 publick_key = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsYgkpNaumtRYcxSDJFp2Uz7SxCN5mMV68RCf2XTLXcN43LEEWMC3E7A9CAdg2CV2tfs5JPrbZDTPYZWVUjs9gdgNfH1NbRyy39HCYqTyi' #публичный токен
 
-amount = 100 # цена за подписку
+amount = 5 # цена за подписку
 
 
 admins = [5206676272] #добавь сюда свой ID
@@ -1026,24 +1026,24 @@ def start_spam(_phone):
 
 @dp.message_handler(commands=['start'])
 async def start_message(message: types.Message):
-    await bot.send_message(message.chat.id, 'Я смс бомбер.Управление с помощью кнопок ниже.', reply_markup=main_keyboard)
+    await bot.send_message(message.chat.id, 'Добрый день!', reply_markup=main_keyboard)
     user = new_user(message.chat.id)
     if user == 'new user':
-        await bot.send_message(message.chat.id, 'У вас есть реферальный код?Если есть напишите /ref код')
+        await bot.send_message(message.chat.id, 'Добро пожаловать в Boom Bot! У вас есть реферальный код? Если есть напишите: ref ВАШ КОД')
    
 
 
 @dp.message_handler(text=["Помощь⚡️"])
 async def help_message(message: types.Message):
-    await bot.send_message(message.chat.id, "Выдать бесплатную подписку /sub телеграм ID\n/spam номер - начать атаку\n/ref код - ввести реферальный код")
+    await bot.send_message(message.chat.id, "По всем вопросам писать @lanskoyy или @youkea")
 
 @dp.message_handler(text=['Профиль🔮'])
 async def profile(message: types.Message):
     check = check_sub(message.chat.id)
     if not check:
-        await bot.send_message(message.chat.id, f'Ваш ID:{message.chat.id}👾\nПодписка:не активна😞', reply_markup=profile_keyboard)
+        await bot.send_message(message.chat.id, f'Ваш ID:{message.chat.id}👾\nПодписка: отсутствует 😞', reply_markup=profile_keyboard)
     elif check:
-        await bot.send_message(message.chat.id, f'Ваш ID:{message.chat.id}👾\nПодписка:активна👑', reply_markup=profile_keyboard)
+        await bot.send_message(message.chat.id, f'Ваш ID:{message.chat.id}👾\nПодписка: активна👑', reply_markup=profile_keyboard)
 
 
 @dp.message_handler(text=["Назад"])
@@ -1059,7 +1059,7 @@ async def spam(message: types.Message):
     back_button = types.KeyboardButton('Назад')
     spam_button = types.KeyboardButton('Остановить спам💡')
     profile_keyboard = types.ReplyKeyboardMarkup().add(referal_button,admin_button,spam_button,help_button,back_button)
-    await bot.send_message(message.chat.id, 'Напишите номер,пример 7XXX.', reply_markup=profile_keyboard)
+    await bot.send_message(message.chat.id, 'Напишите номер,пример 7911*****69.', reply_markup=profile_keyboard)
 
 
 @dp.message_handler(text=['Оплата👀'])
@@ -1072,14 +1072,14 @@ async def payment(message: types.Message):
         parameters = {'publicKey':publick_key,'amount':amount,'phone':phone,'comment':comment}
         h = s.get('https://oplata.qiwi.com/create', params = parameters)
         inlinepay_keyboard = types.InlineKeyboardMarkup()
-        pay_sub = types.InlineKeyboardButton('Оплатить подписку(qiwi)', url=h.url)
-        check_pay = types.InlineKeyboardButton(text='Проверить оплату QIWI😎',callback_data='checkpay')
+        pay_sub = types.InlineKeyboardButton('Оплатить подписку(QIWI)', url=h.url)
+        check_pay = types.InlineKeyboardButton(text='Проверить оплату QIWI',callback_data='checkpay')
         pay_sub_balance = types.InlineKeyboardButton(text='Оплатить с баланса в боте',callback_data='checkbalance')
         inlinepay_keyboard = inlinepay_keyboard.add(pay_sub).add(pay_sub_balance).add(check_pay)
         await bot.send_message(message.chat.id, f'Для оплаты нажмите на кнопку ниже.', reply_markup=inlinepay_keyboard)
         new_payment(message.chat.id,comment,amount)
     elif check:
-        await bot.send_message(message.chat.id, 'Вы уже купили подписку,удачного пользования!', reply_markup=main_keyboard)
+        await bot.send_message(message.chat.id, 'Вы уже купили подписку! :)', reply_markup=main_keyboard)
     
 
 
@@ -1094,13 +1094,13 @@ async def check_payment(query: types.CallbackQuery):
     for i in range(len(result['data'])):
         if result['data'][i]['comment'] == str(comment):
             if result['data'][i]['sum']['amount'] >= amount:
-                await bot.send_message(query.message.chat.id, 'Оплата прошла,добавил вас в базу')
+                await bot.send_message(query.message.chat.id, 'Оплата прошла, поздравляем с приобретением подписки')
                 inviter = referal_pay(query.message.chat.id)
-                await bot.send_message(inviter, 'Ваш реферал оплатил подписку вам начислено 10%🤑')
+                await bot.send_message(inviter, 'Ваш реферал оплатил подписку,  вам начислено 10% 🤑')
                 add_sub(query.message.chat.id)
                 break
         else:
-            await bot.send_message(query.message.chat.id, 'Не нашел вашу оплату')
+            await bot.send_message(query.message.chat.id, 'Не нашел вашу оплату...')
             break
 
 @dp.callback_query_handler(text='checkbalance')
@@ -1109,7 +1109,7 @@ async def check_balance(query: types.CallbackQuery):
     if pay:
         await bot.send_message(query.message.chat.id, 'Вы успешно купили подписку💎')
     elif not pay:
-        await bot.send_message(query.message.chat.id, 'На вашем балансе не достаточно денег!')
+        await bot.send_message(query.message.chat.id, 'На вашем балансе недостаточно средств!')
 
 
 
@@ -1121,7 +1121,7 @@ async def spam_start_func(message: types.Message):
     back_button = types.KeyboardButton('Назад')
     spam_button = types.KeyboardButton('Закончить атаку💡')
     profile_keyboard = types.ReplyKeyboardMarkup().add(referal_button,admin_button,spam_button,help_button,back_button)
-    await bot.send_message(message.chat.id, 'Напишите номер,пример 7XXX.', reply_markup=profile_keyboard)
+    await bot.send_message(message.chat.id, 'Напишите номер,пример 7911*****69.', reply_markup=profile_keyboard)
 
 
 
@@ -1135,7 +1135,7 @@ async def stop_spam_func(message:types.Message):
 async def admin(message: types.Message):
     chat_id = message.chat.id
     if chat_id in admins:
-        await bot.send_message(message.chat.id, 'Вы вошли в админ панель.\n/sub @ТЕЛЕГРАММ ID - выдать бесплатную подписку\n/changebalance @ТЕЛЕГРАММ ID - сбросить реферальный баланс до нуля')
+        await bot.send_message(message.chat.id, 'Вы вошли в админ панель.\n/sub ID - выдать бесплатную подписку\n/changebalance ID - сбросить реферальный баланс до нуля')
     else:
         await bot.send_message(message.chat.id, 'У вас нет доступа к админ панели!')
 
@@ -1143,7 +1143,7 @@ async def admin(message: types.Message):
 @dp.message_handler(text=['Реферальная система🎯'])
 async def referal_system(message: types.Message):
     balance = get_balance(message.chat.id)
-    await bot.send_message(message.chat.id, f'Получите 10% от пополнения ваших рефералов💳\nБаланс от рефералов:{balance}₽\nВаш реферальный код:{message.chat.id}⚙️\nКоличество ваших рефералов:{get_referals(message.chat.id,message.chat.id)}⭐️')
+    await bot.send_message(message.chat.id, f'Получите 10% от пополнения ваших рефералов💳\n\nБаланс от рефералов: {balance}₽\n\nВаш реферальный код: {message.chat.id}\n\nКоличество ваших рефералов: {get_referals(message.chat.id,message.chat.id)} ⭐️')
 
 
 
@@ -1157,24 +1157,24 @@ async def admin_commands(message: types.Message):
             add_sub(telegram_id)
             await bot.send_message(message.chat.id, 'Выдал бесплатный доступ👥')
             try:
-                await bot.send_message(telegram_id, 'Вам выдали бесплатный доступ к боту🤩')
+                await bot.send_message(telegram_id, 'Вам выдали бесплатный доступ к боту 🤩')
             except:
                 pass
         else:
             await bot.send_message(message.chat.id, 'У вас нет доступа к данной функции!')
-    elif '/ref' in message.text:
-        promo = message.text.replace('/ref', ' ').replace(' ', '')
+    elif 'ref' in message.text:
+        promo = message.text.replace('ref', ' ').replace(' ', '')
         add_promo(message.chat.id, promo)
         await bot.send_message(message.chat.id, 'Промокод активирован!')
     elif '/spam' in message.text:
         check = check_sub(message.chat.id)
         number = message.get_args()
         if check and number != '' and len(number) == 11:
-            await bot.send_message(message.chat.id, f'Спам на номер {number} запущен!')
+            await bot.send_message(message.chat.id, f'Атака на номер {number} запущена!')
             spam_thread = Process(target=start_spam, args=(number,))
             spam_thread.start()
         elif check and len(number) != 11:
-            await bot.send_message(message.chat.id, f'Ожидается 11 цифр,вы ввели {len(number)}')
+            await bot.send_message(message.chat.id, f'Неправильно набран номер')
 
     elif message.text == '/admin':
         chat_id = message.chat.id
